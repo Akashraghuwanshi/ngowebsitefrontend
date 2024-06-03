@@ -1,27 +1,65 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ProjectsDropDownMenu = () => {
+const ProjectsDropDownMenu = ({ closeMobileMenu }) => {
   return (
-    <div className="absolute top-full mt-5 w-48 rounded-md shadow-lg bg-slate-300 ring-1  ring-opacity-5 z-10">
+    <div className="absolute top-full mt-1 rounded-md shadow-lg bg-slate-300 ring-1 ring-opacity-5 z-10">
       <div className="py-1">
-        <Link to="/education" className="block px-4 py-2  text-orange-400 hover:text-orange-500">
-        EDUCATION
+        <Link to="/education" className="whitespace-nowrap block px-4 py-2 text-orange-400 hover:text-orange-500" onClick={closeMobileMenu}>
+          EDUCATION
         </Link>
-        <Link to="/job-oriented" className="block px-4 py-2  text-orange-400 hover:text-orange-500">
-        JOB ORIENTED
+        <Link to="/job-oriented" className="whitespace-nowrap block px-4 py-2 text-orange-400 hover:text-orange-500" onClick={closeMobileMenu}>
+          JOB ORIENTED
         </Link>
-        <Link to="/self-employment" className="block px-4 py-2  text-orange-400 hover:text-orange-500">
-        SELF EMPLOYMENT
+        <Link to="/self-employment" className="whitespace-nowrap block px-4 py-2 text-orange-400 hover:text-orange-500" onClick={closeMobileMenu}>
+          SELF EMPLOYMENT
         </Link>
-        <Link to="/self-help-groups" className="block px-4 py-2  text-orange-400 hover:text-orange-500">
-        SELF HELP GROUPS(for females only)
+        <Link to="/self-help-groups" className="whitespace-nowrap block px-4 py-2 text-orange-400 hover:text-orange-500" onClick={closeMobileMenu}>
+          SELF HELP GROUPS
         </Link>
       </div>
     </div>
   );
 };
-
+ProjectsDropDownMenu.propTypes = {
+  closeMobileMenu: PropTypes.func.isRequired,
+};
 export default ProjectsDropDownMenu;
+
+
+
+
+
+
+
+
+
+
+
+// import { Link } from 'react-router-dom';
+
+// const ProjectsDropDownMenu = () => {
+//   return (
+//     <div className="absolute top-full mt-1 rounded-md shadow-lg bg-slate-300 ring-1  ring-opacity-5 z-10 ">
+//       <div className="py-1">
+//         <Link to="/education" className="whitespace-nowrap block px-4 py-2  text-orange-400 hover:text-orange-500">
+//         EDUCATION
+//         </Link>
+//         <Link to="/job-oriented" className="whitespace-nowrap block px-4 py-2  text-orange-400 hover:text-orange-500">
+//         JOB ORIENTED
+//         </Link>
+//         <Link to="/self-employment" className="whitespace-nowrap block px-4 py-2  text-orange-400 hover:text-orange-500">
+//         SELF EMPLOYMENT
+//         </Link>
+//         <Link to="/self-help-groups" className=" whitespace-nowrap block px-4 py-2  text-orange-400 hover:text-orange-500">
+//         SELF HELP GROUPS
+//         </Link>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProjectsDropDownMenu;
 
 
 

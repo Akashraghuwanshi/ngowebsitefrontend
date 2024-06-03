@@ -26,7 +26,7 @@ import Contact from './pages/Contact'
 import BecomeAVolunteer from "./pages/BecomeAVolunteer"
 
 import "../CSS/font.css"
-import {FooterComponent} from "./components/Footer"
+import FooterComponent from "./components/Footer"
 
 
 
@@ -49,7 +49,6 @@ function App() {
       <Route path="/job-oriented" element={<JobOriented/>}/>
       <Route path="/self-help-groups" element={<SelfHelpGroup/>}/>
       <Route path="/self-employment" element={<SelfEmployment/>}/>
-
       <Route path="/partner" element={<Partner/>}/>
       <Route path="/volunteers" element={<Volunteers/>}/>
       <Route path="/become-volunteer" element={<BecomeAVolunteer/>}/>

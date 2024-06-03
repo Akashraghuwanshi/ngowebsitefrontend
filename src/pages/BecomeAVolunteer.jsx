@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 const BecomeAVolunteer = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    contactNumber: '',
-    gender: '',
-    age: '',
-    state: '',
-    district: '',
-    areaOfInterest: '',
+    name: "",
+    contactNumber: "",
+    gender: "",
+    age: "",
+    state: "",
+    district: "",
+    areaOfInterest: "",
     image: null,
   });
 
@@ -16,7 +17,7 @@ const BecomeAVolunteer = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'image') {
+    if (name === "image") {
       const file = files[0];
       setFormData((prevData) => ({
         ...prevData,
@@ -35,60 +36,98 @@ const BecomeAVolunteer = () => {
     e.preventDefault();
 
     // Validation logic
-    const { name, contactNumber, gender, age, state, district, areaOfInterest, image } = formData;
-    if (!name || !contactNumber || !gender || !age || !state || !district || !areaOfInterest || !image) {
-      alert('All fields are required.');
+    const {
+      name,
+      contactNumber,
+      gender,
+      age,
+      state,
+      district,
+      areaOfInterest,
+      image,
+    } = formData;
+    if (
+      !name ||
+      !contactNumber ||
+      !gender ||
+      !age ||
+      !state ||
+      !district ||
+      !areaOfInterest ||
+      !image
+    ) {
+      alert("All fields are required.");
       return;
     }
 
     const formDataToSend = new FormData();
-    formDataToSend.append('name', name);
-    formDataToSend.append('contactNumber', contactNumber);
-    formDataToSend.append('gender', gender);
-    formDataToSend.append('age', age);
-    formDataToSend.append('state', state);
-    formDataToSend.append('district', district);
-    formDataToSend.append('areaOfInterest', areaOfInterest);
-    formDataToSend.append('image', image);
+    formDataToSend.append("name", name);
+    formDataToSend.append("contactNumber", contactNumber);
+    formDataToSend.append("gender", gender);
+    formDataToSend.append("age", age);
+    formDataToSend.append("state", state);
+    formDataToSend.append("district", district);
+    formDataToSend.append("areaOfInterest", areaOfInterest);
+    formDataToSend.append("image", image);
 
-    const response = await fetch('https://ngowebsitebackend.onrender.com/becomevolunteer/info', {
-      method: 'POST',
-      body: formDataToSend,
-    });
+    try {
+      const response = await axios.post(
+        'https://ngowebsitebackend.onrender.com/becomevolunteer/info',
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    // const volunteerInfo = await response.json();
-    // console.log(volunteerInfo);
+      const volunteerInfo = response.data;
+      console.log(volunteerInfo);
 
-    if (response.ok) {
-      // Handle successful submission
-      console.log('Form submitted successfully');
-    } else {
-      // Handle errors
-      console.error('Form submission failed');
+      if (response.status === 200) {
+        // Handle successful submission
+        console.log("Form submitted successfully");
+      } else {
+        // Handle errors
+        console.error("Form submission failed");
+      }
+
+      setFormData({
+        name: "",
+        contactNumber: "",
+        gender: "",
+        age: "",
+        state: "",
+        district: "",
+        areaOfInterest: "",
+        image: null,
+      });
+      setImagePreview(null);
+    } catch (error) {
+      console.error("Form submission failed", error);
     }
-
-    setFormData({
-      name: '',
-      contactNumber: '',
-      gender: '',
-      age: '',
-      state: '',
-      district: '',
-      areaOfInterest: '',
-      image: null,
-    });
-    setImagePreview(null);
   };
 
   return (
     <main>
-       <div className='flex justify-center bg-orange-400 mt-1'>
-        <h1 className='text-2xl font-bold'>Be the change you wish to see—volunteer with us today and make a lasting impact!</h1>
+      <div className="flex justify-center bg-orange-400 mt-1">
+        <h1 className="text-2xl font-bold">
+          Be the change you wish to see—volunteer with us today and make a
+          lasting impact!
+        </h1>
       </div>
-      <form onSubmit={handleSubmit} className="max-w-lg w-full mx-auto p-4 space-y-4 bg-orange-100 rounded shadow-md m-5 md:max-w-xl lg:max-w-3xl">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-lg w-full mx-auto p-4 space-y-4 bg-orange-100 rounded shadow-md m-5 md:max-w-xl lg:max-w-3xl"
+      >
         {/* Existing input fields */}
         <div>
-          <label htmlFor="name" className="block text-xl font-bold text-gray-700">Name</label>
+          <label
+            htmlFor="name"
+            className="block text-xl font-bold text-gray-700"
+          >
+            Name
+          </label>
           <input
             type="text"
             id="name"
@@ -99,7 +138,12 @@ const BecomeAVolunteer = () => {
           />
         </div>
         <div>
-          <label htmlFor="contactNumber" className="block text-xl font-bold text-gray-700">Contact Number</label>
+          <label
+            htmlFor="contactNumber"
+            className="block text-xl font-bold text-gray-700"
+          >
+            Contact Number
+          </label>
           <input
             type="tel"
             id="contactNumber"
@@ -110,7 +154,12 @@ const BecomeAVolunteer = () => {
           />
         </div>
         <div>
-          <label htmlFor="gender" className="block text-xl font-bold text-gray-700">Gender</label>
+          <label
+            htmlFor="gender"
+            className="block text-xl font-bold text-gray-700"
+          >
+            Gender
+          </label>
           <select
             id="gender"
             name="gender"
@@ -125,7 +174,12 @@ const BecomeAVolunteer = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="age" className="block text-xl font-bold text-gray-700">Age</label>
+          <label
+            htmlFor="age"
+            className="block text-xl font-bold text-gray-700"
+          >
+            Age
+          </label>
           <input
             type="number"
             id="age"
@@ -136,7 +190,12 @@ const BecomeAVolunteer = () => {
           />
         </div>
         <div>
-          <label htmlFor="state" className="block text-xl font-bold text-gray-700">State</label>
+          <label
+            htmlFor="state"
+            className="block text-xl font-bold text-gray-700"
+          >
+            State
+          </label>
           <input
             type="text"
             id="state"
@@ -147,7 +206,12 @@ const BecomeAVolunteer = () => {
           />
         </div>
         <div>
-          <label htmlFor="district" className="block text-xl font-bold text-gray-700">District</label>
+          <label
+            htmlFor="district"
+            className="block text-xl font-bold text-gray-700"
+          >
+            District
+          </label>
           <input
             type="text"
             id="district"
@@ -158,7 +222,12 @@ const BecomeAVolunteer = () => {
           />
         </div>
         <div>
-          <label htmlFor="areaOfInterest" className="block text-xl font-bold text-gray-700">Area of Interest</label>
+          <label
+            htmlFor="areaOfInterest"
+            className="block text-xl font-bold text-gray-700"
+          >
+            Area of Interest
+          </label>
           <input
             type="text"
             id="areaOfInterest"
@@ -169,7 +238,12 @@ const BecomeAVolunteer = () => {
           />
         </div>
         <div>
-          <label htmlFor="image" className="block text-xl font-bold text-gray-700">Upload-Image</label>
+          <label
+            htmlFor="image"
+            className="block text-xl font-bold text-gray-700"
+          >
+            Upload-Image
+          </label>
           <input
             type="file"
             id="image"
@@ -183,7 +257,7 @@ const BecomeAVolunteer = () => {
               src={imagePreview}
               alt="Image Preview"
               className="mt-2 w-24 h-24 object-cover border-2 border-gray-300 rounded"
-              style={{ width: '150px', height: '150px' }}
+              style={{ width: "150px", height: "150px" }}
             />
           )}
         </div>
@@ -195,17 +269,17 @@ const BecomeAVolunteer = () => {
             Submit
           </button>
         </div>
-        <Link to="/volunteers">
-        <div>
+      </form>
+      <Link to="/volunteers">
+        <div className="flex">
           <button
             type="submit"
-            className="mt-2 block w-full p-2 border-4 border-orange-300 rounded-lg shadow-sm focus:outline-none focus:border-none text-2xl"
+            className="max-w-lg w-full mx-auto p-4 space-y-4 bg-orange-100 rounded shadow-md m-5 md:max-w-xl lg:max-w-3xl text-xl font-bold"
           >
             OUR VOLUNTEERS
           </button>
         </div>
-        </Link>
-      </form>
+      </Link>
     </main>
   );
 };
