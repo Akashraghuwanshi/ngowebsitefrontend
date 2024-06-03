@@ -104,7 +104,17 @@ const BecomeAVolunteer = () => {
       });
       setImagePreview(null);
     } catch (error) {
-      console.error("Form submission failed", error);
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error('Server Error:', error.response.data);
+      } else if (error.request) {
+        // Request was made but no response was received
+        console.error('Network Error:', error.request);
+      } else {
+        // Something happened in setting up the request
+        console.error('Error', error.message);
+      }
+      console.error('Form submission failed', error.config);
     }
   };
 
